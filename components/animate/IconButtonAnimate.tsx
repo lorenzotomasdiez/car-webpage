@@ -1,18 +1,17 @@
 import { m } from 'framer-motion';
-import { forwardRef, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 // @mui
 import { Box, IconButton, IconButtonProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ children, size = 'medium', ...other }, ref) => (
-    <AnimateWrap size={size}>
-      <IconButton size={size} ref={ref} {...other}>
-        {children}
-      </IconButton>
-    </AnimateWrap>
-  )
+const IconButtonAnimate:FC<IconButtonProps> = (
+  { children, size = 'medium', ...other }) => (
+  <AnimateWrap size={size}>
+    <IconButton size={size} {...other}>
+      {children}
+    </IconButton>
+  </AnimateWrap>
 );
 
 export default IconButtonAnimate;

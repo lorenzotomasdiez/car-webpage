@@ -1,5 +1,5 @@
 import { m } from 'framer-motion';
-import { forwardRef, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Box, Fab, FabProps, SxProps } from '@mui/material';
@@ -19,47 +19,45 @@ interface Props extends Omit<FabProps, 'color'> {
     | 'error';
 }
 
-const FabButtonAnimate = forwardRef<HTMLButtonElement, Props>(
-  ({ color = 'primary', size = 'large', children, sx, sxWrap, ...other }, ref) => {
+const FabButtonAnimate:FC<Props> = (
+  { color = 'primary', size = 'large', children, sx, sxWrap, ...other }) => {
     const theme = useTheme();
 
-    if (
-      color === 'default' ||
-      color === 'inherit' ||
-      color === 'primary' ||
-      color === 'secondary'
-    ) {
-      return (
-        <AnimateWrap size={size} sxWrap={sxWrap}>
-          <Fab ref={ref} size={size} color={color} sx={sx} {...other}>
-            {children}
-          </Fab>
-        </AnimateWrap>
-      );
-    }
-
+  if (
+    color === 'default' ||
+    color === 'inherit' ||
+    color === 'primary' ||
+    color === 'secondary'
+  ) {
     return (
       <AnimateWrap size={size} sxWrap={sxWrap}>
-        <Fab
-          ref={ref}
-          size={size}
-          sx={{
-            boxShadow: theme.customShadows[color],
-            color: theme.palette[color].contrastText,
-            bgcolor: theme.palette[color].main,
-            '&:hover': {
-              bgcolor: theme.palette[color].dark,
-            },
-            ...sx,
-          }}
-          {...other}
-        >
+        <Fab size={size} color={color} sx={sx} {...other}>
           {children}
         </Fab>
       </AnimateWrap>
     );
   }
-);
+
+  return (
+    <AnimateWrap size={size} sxWrap={sxWrap}>
+      <Fab
+        size={size}
+        sx={{
+          boxShadow: theme.customShadows[color],
+          color: theme.palette[color].contrastText,
+          bgcolor: theme.palette[color].main,
+          '&:hover': {
+            bgcolor: theme.palette[color].dark,
+          },
+          ...sx,
+        }}
+        {...other}
+      >
+        {children}
+      </Fab>
+    </AnimateWrap>
+  );
+};
 
 export default FabButtonAnimate;
 
